@@ -27,6 +27,9 @@ jobs:
       - name: Execute Scrapper
         run:
           deno run --allow-net --allow-read --allow-write --allow-env src/cron/scrape.ts
+      - name: List files
+        run:
+           cd src/database/leagues && ls -la
       - name: Push changes
         run: |
           git config user.name "fut-score-bot"

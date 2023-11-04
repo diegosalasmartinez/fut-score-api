@@ -11,6 +11,7 @@ const getLeague = async () => {
 
     if (result && result.length > 0) {
         await writeFile('leagues', 'league.json', result[0])
+        console.log(result[0])
     }
 }
 
