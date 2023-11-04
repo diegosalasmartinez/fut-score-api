@@ -18,6 +18,8 @@ jobs:
       API_FOOTBALL_API_KEY: ${{ secrets.API_FOOTBALL_API_KEY }}
       API_FOOTBALL_API_HOST: ${{ secrets.API_FOOTBALL_API_HOST }}
     steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
       - name: Verify files
         run: ls -al
       - name: Configure Deno
