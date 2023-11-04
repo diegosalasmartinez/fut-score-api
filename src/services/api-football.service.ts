@@ -16,7 +16,6 @@ export class ApiFootballService {
     try {
       console.log('We are in ApiFootballService')
   
-      console.log(this.baseURL)
       const apiUrl = `${this.baseURL}/${path}`
       const queryParams = getQueryParams(params)
   
