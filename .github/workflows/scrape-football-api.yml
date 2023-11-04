@@ -29,8 +29,7 @@ jobs:
           deno run --allow-net --allow-write --allow-env src/cron/scrape.ts
       - name: Push changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "fut-score-bot"
           git diff --quiet && git diff --staged --quiet || git commit -am "[bot] update Api Football data"
           git push origin main
 
