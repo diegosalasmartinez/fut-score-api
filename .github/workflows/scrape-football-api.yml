@@ -24,6 +24,6 @@ jobs:
           deno-version: '1.37.2'
       - name: Execute Scrapper
         run: |
-          deno run --allow-net --allow-write --allow-env --env API_FOOTBALL_BASE_URL=$API_FOOTBALL_BASE_URL API_FOOTBALL_API_KEY=$API_FOOTBALL_API_KEY API_FOOTBALL_API_HOST=$API_FOOTBALL_API_HOST src/cron/scrape.ts
+          deno run --allow-net --allow-write --allow-env src/cron/scrape.ts
           git diff --quiet && git diff --staged --quiet || git commit -am "[bot] update Api Football data"
           git push origin main
