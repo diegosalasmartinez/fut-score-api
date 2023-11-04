@@ -3,7 +3,7 @@ import { GetLeagueController } from "../controllers/league.controller.ts"
 
 const router = new Router()
 
-router.get("/", GetLeagueController)
+router.get("/leagues", GetLeagueController)
 
 router.get("/users/:userId", (ctx) => {
   const { userId } = helpers.getQuery(ctx, { mergeParams: true });

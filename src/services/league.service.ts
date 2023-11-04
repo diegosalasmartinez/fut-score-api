@@ -1,4 +1,5 @@
-import { readFile } from "../utils/file.ts"
+import { readFile, writeFile } from "../utils/file.ts"
+import { ApiFootballService } from "./api-football.service.ts";
 
 export class GetLeagueService {
   private readonly leagueId: number = 34
@@ -7,16 +8,19 @@ export class GetLeagueService {
     try {
       const league = await readFile("leagues/league.json")
       return league
-    } catch (e) {
-      console.log(e)
-      //   return this.getLeague()
+    } catch (_) {
+      return this.getLeague()
     }
   }
 
-  //   private async getLeague() {
-  //     const apiFootball = new ApiFootballService()
-  //     const result = await apiFootball.main('leagues', { id: this.leagueId })
-  //     await writeFile('src/database/leagues/league2.json', result)
-  //     return result
-  //   }
+  private async getLeague() {
+    const apiFootball = new ApiFootballService()
+    const result = await apiFootball.main('leagues', { id: this.leagueId })
+
+    if (result && result.length > 0) {
+      await writeFile('leagues/league.json', result[0])
+  
+      return result[0]
+    }
+  }
 }
