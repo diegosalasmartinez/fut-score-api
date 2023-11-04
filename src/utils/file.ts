@@ -3,6 +3,7 @@ export const readFile = async (path: string) => {
   return JSON.parse(content)
 }
 
-export const writeFile = async (path: string, content: object) => {
-  await Deno.writeTextFile(`src/database/${path}`, JSON.stringify(content))
+export const writeFile = async (folder: string, file: string, content: object) => {
+  await Deno.mkdir(folder, { recursive: true }); 
+  await Deno.writeTextFile(`src/database/${folder}/${file}`, JSON.stringify(content))
 }

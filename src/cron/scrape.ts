@@ -10,7 +10,7 @@ const getLeague = async () => {
     const result = await apiFootball.main('leagues', { id: LEAGUE_ID })
 
     if (result && result.length > 0) {
-        await writeFile('leagues/league.json', result[0])
+        await writeFile('leagues', 'league.json', result[0])
     }
 }
 
