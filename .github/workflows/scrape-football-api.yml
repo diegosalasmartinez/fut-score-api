@@ -20,14 +20,17 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
-      - name: Verify files
-        run: ls -al
       - name: Configure Deno
         uses: denolib/setup-deno@v2
         with:
           deno-version: '1.37.2'
       - name: Execute Scrapper
-        run: |
+        run:
           deno run --allow-net --allow-write --allow-env src/cron/scrape.ts
+      - name: Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git diff --quiet && git diff --staged --quiet || git commit -am "[bot] update Api Football data"
           git push origin main
+
