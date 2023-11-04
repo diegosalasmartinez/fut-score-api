@@ -1,4 +1,5 @@
 import { getQueryParams } from "../utils/query.ts";
+import "https://deno.land/x/dotenv@v3.2.2/load.ts";
 
 export class ApiFootballService {
   private readonly baseURL: string
