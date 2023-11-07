@@ -1,20 +1,57 @@
-import { ApiFootballService } from "../services/api-football.service.ts";
-import { writeFile } from "../utils/file.ts";
+import { ApiFootballService } from "../services/api-football.service.ts"
+import { writeFile } from "../utils/file.ts"
 
-console.log('I am the scrape cron job')
+console.log("Start scapring job")
 
-const LEAGUE_ID = 34
+class ScrapeService {
+  private leagueId = 34
+  private season = 2026
+  private apiFootball = new ApiFootballService()
 
-const getLeague = async () => {
-    const apiFootball = new ApiFootballService()
-    const result = await apiFootball.main('leagues', { id: LEAGUE_ID })
+  async main() {
+    await this.getLeague()
+    await this.getSeason()
+    await this.getStats()
+  }
 
-    if (result && result.length > 0) {
-        await writeFile('leagues', 'league.json', result[0])
-        console.log('League saved')
-    }
+  async getLeague() {
+    const leagues = await this.apiFootball.main("leagues", {
+      id: this.leagueId
+    })
+    const league = leagues?.[0]
+    if (!league) throw new Error(`League not found: ${this.leagueId}`)
+
+    await writeFile("leagues", "league.json", league)
+    console.log("League saved")
+
+    const lastSeason = league.seasons[league.seasons.length - 1]
+    this.season = lastSeason.year
+  }
+
+  async getSeason() {
+    const seasons = await this.apiFootball.main("standings", {
+      league: this.leagueId,
+      season: this.season
+    })
+    const season = seasons?.[0]
+    if (!season)
+      throw new Error(`Season not found: ${this.leagueId} - ${this.season}`)
+
+    await writeFile("leagues", "season.json", season)
+    console.log("Season saved")
+  }
+
+  async getStats() {
+    const topScorers = await this.apiFootball.main("players/topscorers", {
+      league: this.leagueId,
+      season: this.season
+    })
+    await writeFile("leagues", "topscorers.json", { data: topScorers })
+    console.log("Top scorers saved")
+  }
 }
 
-await getLeague()
+const service = new ScrapeService()
+await service.main()
 
-console.log('Job finished')
+console.log("Finish scraping job")

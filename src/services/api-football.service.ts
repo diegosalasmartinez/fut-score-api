@@ -1,3 +1,4 @@
+import { ApiFootballInterface } from "../interfaces/api-football.interface.ts";
 import { getQueryParams } from "../utils/query.ts";
 import "https://deno.land/x/dotenv@v3.2.2/load.ts";
 
@@ -14,8 +15,6 @@ export class ApiFootballService {
 
   public async main(path: string, params?: object) {
     try {
-      console.log('We are in ApiFootballService')
-  
       const apiUrl = `${this.baseURL}/${path}`
       const queryParams = getQueryParams(params)
   
@@ -28,12 +27,10 @@ export class ApiFootballService {
 
       if (!response.ok) throw new Error("Error in ApiFootballService")
   
-      const data = await response.json()
-      if (data) {
-        return data.response
-      } else {
-        throw new Error("Error in ApiFootballService")
-      }
+      const data = await response.json() as ApiFootballInterface
+      if (!data || data.errors.length > 0) throw new Error("Error in ApiFootballService")
+
+      return data.response
     } catch(e) {
       console.error(e)
     }
