@@ -6,14 +6,43 @@ export const GetLeagueController = async (ctx: RouterContext<any>) => {
   const service = new GetLeagueService()
   const response = await service.main()
 
-  if (response) {
-    ctx.response.body = {
-      data: response
-    }
-  } else {
+  if (!response) {
     ctx.response.status = 404
     ctx.response.body = {
       message: 'League not found'
     }
+    return
   }
+
+  ctx.response.body = response
+}
+
+export const GetLeagueSeasonController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.getSeason()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Season not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
+}
+
+export const GetLeagueStatsController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.getStats()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Stats not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
 }
