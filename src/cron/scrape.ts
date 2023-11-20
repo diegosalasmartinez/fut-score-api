@@ -11,6 +11,8 @@ class ScrapeService {
   async main() {
     await this.getLeague()
     await this.getSeason()
+    await this.getCurrentRound()
+    await this.getAllMatches()
     await this.getStats()
   }
 
@@ -39,6 +41,39 @@ class ScrapeService {
 
     await writeFile("leagues", "season.json", season)
     console.log("Season saved")
+  }
+
+  async getCurrentRound() {
+    const rounds = await this.apiFootball.main("fixtures/rounds", {
+      league: this.leagueId,
+      season: this.season,
+      current: true
+    })
+    const round = rounds?.[0]
+    if (!round)
+      throw new Error(`Round not found: ${this.leagueId} - ${this.season}`)
+
+    const parts = round.split("-")
+    if (parts.length !== 2) throw new Error(`Invalid round: ${round}`)
+
+    const data = {
+      round: round,
+      roundNumber: parts[1].trim()
+    }
+    await writeFile("leagues", "round.json", data)
+    console.log("Round saved")
+  }
+
+  async getAllMatches() {
+    const matches = await this.apiFootball.main("fixtures", {
+      league: this.leagueId,
+      season: this.season
+    })
+    if (!matches)
+      throw new Error(`Matches not found: ${this.leagueId} - ${this.season}`)
+
+    await writeFile("leagues", "matches.json", matches)
+    console.log("Matches saved")
   }
 
   async getStats() {
