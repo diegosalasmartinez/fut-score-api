@@ -2,7 +2,10 @@ import { Router, helpers } from "https://deno.land/x/oak@v11.1.0/mod.ts"
 import {
   GetLeagueController,
   GetLeagueSeasonController,
-  GetLeagueStatsController
+  GetLeagueStatsController,
+  GetLeagueMatchesController,
+  GetLeagueLastMatchesController,
+  GetLeagueNextMatchesController
 } from "../controllers/league.controller.ts"
 
 const router = new Router()
@@ -10,6 +13,12 @@ const router = new Router()
 router.get("/leagues", GetLeagueController)
 
 router.get("/leagues/season", GetLeagueSeasonController)
+
+router.get("/leagues/matches", GetLeagueMatchesController)
+
+router.get("/leagues/matches/last", GetLeagueLastMatchesController)
+
+router.get("/leagues/matches/next", GetLeagueNextMatchesController)
 
 router.get("/leagues/stats", GetLeagueStatsController)
 

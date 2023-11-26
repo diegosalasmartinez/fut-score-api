@@ -46,3 +46,49 @@ export const GetLeagueStatsController = async (ctx: RouterContext<any>) => {
 
   ctx.response.body = response
 }
+
+export const GetLeagueMatchesController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.getMatches()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Matches not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
+}
+
+export const GetLeagueLastMatchesController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.lastMatches()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Matches not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
+}
+
+
+export const GetLeagueNextMatchesController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.nextMatches()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Matches not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
+}

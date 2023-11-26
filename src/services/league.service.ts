@@ -27,4 +27,37 @@ export class GetLeagueService {
       console.error(e)
     }
   }
+
+  public async getMatches() {
+    try {
+      const matches = await readFile("leagues/matches.json")
+      return matches
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async lastMatches() {
+    try {
+      const round = await readFile("leagues/round.json")
+      const roundNumber = parseInt(round.roundNumber)
+      const lastRound = `${round.round.split("-")[0].trim()} - ${roundNumber - 1}` 
+
+      const matches = await readFile("leagues/matches.json")
+      return matches.filter((match: any) => match.league.round === lastRound)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async nextMatches() {
+    try {
+      const round = await readFile("leagues/round.json")
+
+      const matches = await readFile("leagues/matches.json")
+      return matches.filter((match: any) => match.league.round === round.round)
+    } catch (e) {
+      console.error(e)
+    }
+  }
 }
