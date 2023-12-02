@@ -31,7 +31,17 @@ export class GetLeagueService {
   public async getMatches() {
     try {
       const matches = await readFile("leagues/matches.json")
-      return matches
+
+      const matchesGrouped = matches.reduce((acc: any, match: any) => {
+        const round = match.league.round
+        if (!acc[round]) {
+          acc[round] = []
+        }
+        acc[round].push(match)
+        return acc
+      }, {})
+
+      return Object.values(matchesGrouped)
     } catch (e) {
       console.error(e)
     }
@@ -41,7 +51,9 @@ export class GetLeagueService {
     try {
       const round = await readFile("leagues/round.json")
       const roundNumber = parseInt(round.roundNumber)
-      const lastRound = `${round.round.split("-")[0].trim()} - ${roundNumber - 1}` 
+      const lastRound = `${round.round.split("-")[0].trim()} - ${
+        roundNumber - 1
+      }`
 
       const matches = await readFile("leagues/matches.json")
       return matches.filter((match: any) => match.league.round === lastRound)
