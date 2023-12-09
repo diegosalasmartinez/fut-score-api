@@ -19,9 +19,36 @@ export class GetLeagueService {
     }
   }
 
-  public async getStats() {
+  public async getTopScorers() {
     try {
       const stats = await readFile("leagues/topscorers.json")
+      return stats
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async getTopAssists() {
+    try {
+      const stats = await readFile("leagues/topassists.json")
+      return stats
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async getTopRedCards() {
+    try {
+      const stats = await readFile("leagues/topredcards.json")
+      return stats
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async getTopYellowCards() {
+    try {
+      const stats = await readFile("leagues/topyellowcards.json")
       return stats
     } catch (e) {
       console.error(e)

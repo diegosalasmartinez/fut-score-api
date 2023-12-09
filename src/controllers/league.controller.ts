@@ -17,7 +17,7 @@ export const GetLeagueController = async (ctx: RouterContext<any>) => {
   ctx.response.body = response
 }
 
-export const GetLeagueSeasonController = async (ctx: RouterContext<any>) => {
+export const GetSeasonController = async (ctx: RouterContext<any>) => {
   const service = new GetLeagueService()
   const response = await service.getSeason()
 
@@ -32,14 +32,14 @@ export const GetLeagueSeasonController = async (ctx: RouterContext<any>) => {
   ctx.response.body = response
 }
 
-export const GetLeagueStatsController = async (ctx: RouterContext<any>) => {
+export const GetTopScorersController = async (ctx: RouterContext<any>) => {
   const service = new GetLeagueService()
-  const response = await service.getStats()
+  const response = await service.getTopScorers()
 
   if (!response) {
     ctx.response.status = 404
     ctx.response.body = {
-      message: 'Stats not found'
+      message: 'Top scorers not found'
     }
     return
   }
@@ -47,7 +47,52 @@ export const GetLeagueStatsController = async (ctx: RouterContext<any>) => {
   ctx.response.body = response
 }
 
-export const GetLeagueMatchesController = async (ctx: RouterContext<any>) => {
+export const GetTopAssistsController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.getTopAssists()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Top assists not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
+}
+
+export const GetTopRedCardsController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.getTopRedCards()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Top red cards not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
+}
+
+export const GetTopYellowCardsController = async (ctx: RouterContext<any>) => {
+  const service = new GetLeagueService()
+  const response = await service.getTopYellowCards()
+
+  if (!response) {
+    ctx.response.status = 404
+    ctx.response.body = {
+      message: 'Top yellow cards not found'
+    }
+    return
+  }
+
+  ctx.response.body = response
+}
+
+export const GetMatchesController = async (ctx: RouterContext<any>) => {
   const service = new GetLeagueService()
   const response = await service.getMatches()
 
@@ -62,7 +107,7 @@ export const GetLeagueMatchesController = async (ctx: RouterContext<any>) => {
   ctx.response.body = response
 }
 
-export const GetLeagueLastMatchesController = async (ctx: RouterContext<any>) => {
+export const GetLastMatchesController = async (ctx: RouterContext<any>) => {
   const service = new GetLeagueService()
   const response = await service.lastMatches()
 
@@ -78,7 +123,7 @@ export const GetLeagueLastMatchesController = async (ctx: RouterContext<any>) =>
 }
 
 
-export const GetLeagueNextMatchesController = async (ctx: RouterContext<any>) => {
+export const GetNextMatchesController = async (ctx: RouterContext<any>) => {
   const service = new GetLeagueService()
   const response = await service.nextMatches()
 

@@ -83,6 +83,27 @@ class ScrapeService {
     })
     await writeFile("leagues", "topscorers.json", { data: topScorers })
     console.log("Top scorers saved")
+
+    const topAssists = await this.apiFootball.main("players/topassists", {
+      league: this.leagueId,
+      season: this.season
+    })
+    await writeFile("leagues", "topassists.json", { data: topAssists })
+    console.log("Top assists saved")
+
+    const topRedCards = await this.apiFootball.main("players/topredcards", {
+      league: this.leagueId,
+      season: this.season
+    })
+    await writeFile("leagues", "topredcards.json", { data: topRedCards })
+    console.log("Top red cards saved")
+
+    const topYellowCards = await this.apiFootball.main("players/topyellowcards", {
+      league: this.leagueId,
+      season: this.season
+    })
+    await writeFile("leagues", "topyellowcards.json", { data: topYellowCards })
+    console.log("Top yellow cards saved")
   }
 }
 
